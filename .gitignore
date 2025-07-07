@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.py[cod]
+*.env
+*.sqlite3
+
+# Virtual env
+venv/
+.env/
+
+# VSCode
+.vscode/
+
+# Logs
+*.log
+
+# Mac
+.DS_Store
+
+# PyCharm
+.idea/
+
+# Jupyter / IPython
+.ipynb_checkpoints/

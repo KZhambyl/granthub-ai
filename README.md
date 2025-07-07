@@ -1,0 +1,1 @@
+MVP-platform for searching and analyzing grants using FastAPI, ML.
