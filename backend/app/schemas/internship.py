@@ -1,6 +1,6 @@
 from typing import Optional
 from datetime import datetime
-from .baseSchema import BaseOpportunitySchema
+from .baseSchema import BaseOpportunitySchema, BaseOpportunityUpdateSchema
 
 class InternshipBase(BaseOpportunitySchema):
     duration: Optional[str] = None
@@ -14,5 +14,6 @@ class InternshipRead(InternshipBase):
     created_at: datetime
     updated_at: datetime
 
-class InternshipUpdate(InternshipBase):
-    title: Optional[str] = None
+class InternshipUpdate(BaseOpportunityUpdateSchema):
+    duration: Optional[str] = None
+    paid: Optional[bool] = None

@@ -1,6 +1,6 @@
 from typing import Optional
 from datetime import datetime
-from .baseSchema import BaseOpportunitySchema
+from .baseSchema import BaseOpportunitySchema, BaseOpportunityUpdateSchema
 
 class GrantBase(BaseOpportunitySchema):
     pass
@@ -13,7 +13,7 @@ class GrantRead(GrantBase):
     created_at: datetime
     updated_at: datetime
 
-class GrantUpdate(GrantBase):
+class GrantUpdate(BaseOpportunityUpdateSchema):
     title: Optional[str] = None
     description: Optional[str] = None
     provider: Optional[str] = None

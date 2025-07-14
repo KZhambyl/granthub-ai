@@ -22,3 +22,7 @@ venv/
 
 # Jupyter / IPython
 .ipynb_checkpoints/
+
+# Additional scripts
+tree.py
+draft.py

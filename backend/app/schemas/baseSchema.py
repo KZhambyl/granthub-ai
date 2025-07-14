@@ -19,3 +19,18 @@ class BaseOpportunitySchema(BaseModel):
 
     class Config:
         orm_mode = True
+
+class BaseOpportunityUpdateSchema(BaseModel):
+    title: Optional[str] = None
+    description: Optional[str] = None
+    source_url: Optional[HttpUrl] = None
+
+    deadline: Optional[datetime] = None
+    published_at: Optional[datetime] = None
+
+    country: Optional[str] = None
+    region: Optional[str] = None
+    language: Optional[str] = None
+
+    provider: Optional[str] = None
+    image_url: Optional[HttpUrl] = None
