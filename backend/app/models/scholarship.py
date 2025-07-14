@@ -1,0 +1,7 @@
+from sqlmodel import SQLModel, Field
+from typing import Optional
+from .baseModel import BaseOpportunity
+
+class Scholarship(BaseOpportunity, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True)
+    level: Optional[str] = None  # bachelor, master, phd

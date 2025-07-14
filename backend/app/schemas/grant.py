@@ -1,17 +1,20 @@
-from pydantic import BaseModel
-from datetime import date
 from typing import Optional
+from datetime import datetime
+from .baseSchema import BaseOpportunitySchema
 
-class GrantBase(BaseModel):
-    title: str
-    deadline: Optional[date] = None
-    amount: Optional[str] = None
+class GrantBase(BaseOpportunitySchema):
+    pass
 
 class GrantCreate(GrantBase):
     pass
 
-class GrantOut(GrantBase):
+class GrantRead(GrantBase):
     id: int
+    created_at: datetime
+    updated_at: datetime
 
-    class Config:
-        orm_mode = True
+class GrantUpdate(GrantBase):
+    title: Optional[str] = None
+    description: Optional[str] = None
+    provider: Optional[str] = None
+    
