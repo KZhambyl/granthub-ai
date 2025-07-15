@@ -1,7 +1,6 @@
 from sqlmodel import SQLModel, Field, Column
 import sqlalchemy.dialects.postgresql as pg
 from typing import Optional
-from .baseModel import BaseOpportunity
 from datetime import datetime
 
 class Internship(SQLModel, table=True):

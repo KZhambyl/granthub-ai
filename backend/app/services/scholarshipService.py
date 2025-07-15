@@ -24,12 +24,17 @@ class ScholarshipService:
         if scholarship_data_dict.get('image_url'):
             scholarship_data_dict['image_url'] = str(scholarship_data_dict['image_url'])
 
+        if scholarship_data_dict.get('published_at'):
+            scholarship_data_dict['published_at'] = scholarship_data_dict['published_at'].replace(tzinfo=None)
+        if scholarship_data_dict.get('deadline'):
+            scholarship_data_dict['deadline'] = scholarship_data_dict['deadline'].replace(tzinfo=None)
+
         new_scholarship = Scholarship(
             **scholarship_data_dict
         )
 
-        new_scholarship.published_at = datetime.strptime(scholarship_data_dict['published_at'], "%Y-%m-%d")
-        new_scholarship.deadline = datetime.strptime(scholarship_data_dict['deadline'], "%Y-%m-%d")
+        # new_scholarship.published_at = datetime.strptime(scholarship_data_dict['published_at'], "%Y-%m-%d")
+        # new_scholarship.deadline = datetime.strptime(scholarship_data_dict['deadline'], "%Y-%m-%d")
 
 
         session.add(new_scholarship)

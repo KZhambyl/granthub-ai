@@ -32,12 +32,17 @@ class GrantService:
         if grant_data_dict.get('image_url'):
             grant_data_dict['image_url'] = str(grant_data_dict['image_url'])
 
+        if grant_data_dict.get('published_at'):
+            grant_data_dict['published_at'] = grant_data_dict['published_at'].replace(tzinfo=None)
+        if grant_data_dict.get('deadline'):
+            grant_data_dict['deadline'] = grant_data_dict['deadline'].replace(tzinfo=None)
+
         new_grant = Grant(
             **grant_data_dict
         )
         
-        new_grant.published_at = datetime.strptime(grant_data_dict['published_at'], "%Y-%m-%d")
-        new_grant.deadline = datetime.strptime(grant_data_dict['deadline'], "%Y-%m-%d")
+        # new_grant.published_at = datetime.strptime(grant_data_dict['published_at'], "%Y-%m-%d")
+        # new_grant.deadline = datetime.strptime(grant_data_dict['deadline'], "%Y-%m-%d")
 
         session.add(new_grant)
 

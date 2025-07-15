@@ -32,12 +32,18 @@ class InternshipService:
         if internship_data_dict.get('image_url'):
             internship_data_dict['image_url'] = str(internship_data_dict['image_url'])
 
+        if internship_data_dict.get('published_at'):
+            internship_data_dict['published_at'] = internship_data_dict['published_at'].replace(tzinfo=None)
+        if internship_data_dict.get('deadline'):
+            internship_data_dict['deadline'] = internship_data_dict['deadline'].replace(tzinfo=None)
+
+
         new_internship = Internship(
             **internship_data_dict
         )
 
-        new_internship.published_at = datetime.strptime(internship_data_dict['published_at'], "%Y-%m-%d")
-        new_internship.deadline = datetime.strptime(internship_data_dict['deadline'], "%Y-%m-%d")
+        # new_internship.published_at = datetime.strptime(internship_data_dict['published_at'], "%Y-%m-%d")
+        # new_internship.deadline = datetime.strptime(internship_data_dict['deadline'], "%Y-%m-%d")
 
         session.add(new_internship)
 

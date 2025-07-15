@@ -13,7 +13,7 @@ async_engine: AsyncEngine = create_async_engine(
 
 async def init_db():
     async with async_engine.begin() as conn:
-        from app.models.baseModel import BaseOpportunity
+        from app.models import grant, internship, scholarship
 
         await conn.run_sync(SQLModel.metadata.create_all)
 
