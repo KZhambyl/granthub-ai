@@ -1,27 +1,38 @@
 # Python
 __pycache__/
 *.py[cod]
+*.pyo
+*.pyd
+*.so
+
+# Environment & settings
 *.env
-*.sqlite3
-
-# Virtual env
-venv/
 .env/
+*.sqlite3
+*.db
 
-# VSCode
-.vscode/
+# Virtual Environment
+venv/
 
 # Logs
 *.log
 
-# Mac
-.DS_Store
+# VSCode
+.vscode/
 
 # PyCharm
 .idea/
 
 # Jupyter / IPython
 .ipynb_checkpoints/
+
+# Alembic
+migrations/__pycache__/
+migrations/*.pyc
+
+# Windows / Mac system files
+.DS_Store
+Thumbs.db
 
 # Additional scripts
 tree.py
