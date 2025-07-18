@@ -6,8 +6,8 @@ class Settings(BaseSettings):
     JWT_ALGORITHM: str
     VERSION: str = "0.1.0"
     DATABASE_URL: str
-    REDIS_HOST: str
-    REDIS_PORT: int
+    UPSTASH_REDIS_REST_URL: str
+    UPSTASH_REDIS_REST_TOKEN: str
 
     model_config = SettingsConfigDict(
         env_file = ".env",

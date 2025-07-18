@@ -26,12 +26,12 @@ async def create_user_account(user_data: UserCreateModel, session: AsyncSession 
 
     if user_exists:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="User with this email already exists")
-    
+
     new_user = await user_service.create_user(user_data, session)
 
     return new_user
 
-@auth_router.post('/login')
+@auth_router.post('/login', status_code=status.HTTP_200_OK)
 async def login_users(login_data: UserLoginModel, session: AsyncSession = Depends(get_session)):
     email = login_data.email
     password = login_data.password

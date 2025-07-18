@@ -9,8 +9,8 @@ from datetime import datetime
 class UserCreateModel(BaseModel):
     first_name: str = Field(max_length=10)
     last_name: str = Field(max_length=10)
-    username: str = Field(max_length=10)
-    email: str = Field(max_length=20)
+    username: str = Field(max_length=20)
+    email: str = Field(max_length=30)
     password: str = Field(min_length=8)
 
 class UserModel(BaseModel):
@@ -25,6 +25,6 @@ class UserModel(BaseModel):
     updated_at: datetime
 
 class UserLoginModel(BaseModel):
-    email: str = Field(max_length=20)
+    email: str = Field(max_length=30)
     password: str = Field(min_length=8)
     
