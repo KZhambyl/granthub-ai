@@ -6,19 +6,30 @@ from app.services.grantService import GrantService
 from app.models.grant import Grant
 from typing import List
 from app.db.main import get_session
+from app.auth.dependencies import AccessTokenBearer
+
 
 router = APIRouter()
 grant_service = GrantService()
+access_token_bearer = AccessTokenBearer()
 
 
 @router.get("/", response_model=List[grant.GrantRead], status_code=status.HTTP_200_OK)
-async def get_all_grants(session:AsyncSession = Depends(get_session)):
+async def get_all_grants(
+    session:AsyncSession = Depends(get_session)
+):
     grants = await grant_service.get_all_grants(session)
     return grants
 
 
 @router.post("/", response_model=grant.GrantRead, status_code=status.HTTP_201_CREATED)
-async def create_a_grant(grant_data:grant.GrantCreate, session: AsyncSession = Depends(get_session)):
+async def create_a_grant(
+    grant_data:grant.GrantCreate, 
+    session: AsyncSession = Depends(get_session), 
+    user_details = Depends(access_token_bearer) # Protection of endpoint
+    ):
+    print(user_details)
+
     new_grant = await grant_service.create_grant(grant_data, session)
 
     return new_grant
