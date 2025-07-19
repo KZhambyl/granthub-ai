@@ -1,6 +1,6 @@
 from fastapi import APIRouter, status, Depends, Response
 from fastapi.exceptions import HTTPException
-from app.schemas import scholarship
+from app.schemes import scholarship
 from sqlmodel.ext.asyncio.session import AsyncSession
 from app.services.scholarshipService import ScholarshipService
 from app.models.scholarship import Scholarship

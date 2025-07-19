@@ -1,5 +1,5 @@
 from sqlmodel.ext.asyncio.session import AsyncSession
-from app.schemas import internship
+from app.schemes import internship
 from sqlmodel import select, desc
 from app.models.internship import Internship
 from datetime import datetime
