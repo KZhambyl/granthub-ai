@@ -1,6 +1,6 @@
 from fastapi import APIRouter, status, Depends, Response
 from fastapi.exceptions import HTTPException
-from app.schemas import internship
+from app.schemes import internship
 from sqlmodel.ext.asyncio.session import AsyncSession
 from app.services.internshipService import InternshipService
 from app.models.internship import Internship

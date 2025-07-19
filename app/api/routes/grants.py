@@ -1,20 +1,21 @@
 from fastapi import APIRouter, status, Depends, Response
 from fastapi.exceptions import HTTPException
-from app.schemas import grant
+from app.schemes import grant
 from sqlmodel.ext.asyncio.session import AsyncSession
 from app.services.grantService import GrantService
 from app.models.grant import Grant
 from typing import List
 from app.db.main import get_session
-from app.auth.dependencies import AccessTokenBearer
+from app.auth.dependencies import AccessTokenBearer, RoleChecker
 
 
 router = APIRouter()
 grant_service = GrantService()
 access_token_bearer = AccessTokenBearer()
+role_checker = Depends(RoleChecker(['admin', 'user']))
 
 
-@router.get("/", response_model=List[grant.GrantRead], status_code=status.HTTP_200_OK)
+@router.get("/", response_model=List[grant.GrantRead], status_code=status.HTTP_200_OK, dependencies=[role_checker])
 async def get_all_grants(
     session:AsyncSession = Depends(get_session)
 ):

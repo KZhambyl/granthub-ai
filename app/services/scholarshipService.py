@@ -1,6 +1,6 @@
 from sqlmodel.ext.asyncio.session import AsyncSession
 from sqlmodel import select, desc
-from app.schemas import scholarship
+from app.schemes import scholarship
 from app.models.scholarship import Scholarship
 from datetime import datetime
 

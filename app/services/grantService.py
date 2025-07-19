@@ -1,5 +1,5 @@
 from sqlmodel.ext.asyncio.session import AsyncSession
-from app.schemas import grant
+from app.schemes import grant
 from sqlmodel import select, desc
 from app.models.grant import Grant
 from datetime import datetime
