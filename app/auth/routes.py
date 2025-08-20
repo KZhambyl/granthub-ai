@@ -198,7 +198,7 @@ async def password_reset_request(email_data: PasswordResetRequestModel):
     <p>Please click this <a href="{link}">link</a> to reset your password</p>
     """
     emails=[email]
-    subject="Reset your password",
+    subject="Reset your password"
 
     send_email.delay(emails, subject, html_message)
 

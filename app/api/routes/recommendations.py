@@ -11,9 +11,8 @@ from app.services.recommendationService import RecommendationService
 
 router = APIRouter()
 
-check_admin_or_ml = RoleChecker(["admin", "ml_service"])
 check_admin = RoleChecker(["admin"])
-test_role = RoleChecker(["user"])
+check_user = RoleChecker(["user"])
 
 recommendation_service = RecommendationService()
 
@@ -32,7 +31,7 @@ async def get_user_recommendations(
 async def create(
     recommendations: List[RecommendationCreate],
     session: AsyncSession = Depends(get_session),
-    _: bool = Depends(test_role)  # dev: use test_role; prod: use check_admin_or_ml
+    _: bool = Depends(check_admin)  # dev: use check_user; prod: use check_admin
 ):
     return await recommendation_service.create_recommendations(recommendations, session)
 

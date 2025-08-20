@@ -13,9 +13,10 @@ router = APIRouter()
 grant_service = GrantService()
 access_token_bearer = AccessTokenBearer()
 role_checker = Depends(RoleChecker(['admin', 'user']))
+checker_admin = Depends(RoleChecker(['admin']))
 
 
-@router.get("/", response_model=List[grant.GrantRead], status_code=status.HTTP_200_OK, dependencies=[role_checker])
+@router.get("/", response_model=List[grant.GrantRead], status_code=status.HTTP_200_OK)
 async def get_all_grants(
     session:AsyncSession = Depends(get_session)
 ):
@@ -23,13 +24,11 @@ async def get_all_grants(
     return grants
 
 
-@router.post("/", response_model=grant.GrantRead, status_code=status.HTTP_201_CREATED)
+@router.post("/", response_model=grant.GrantRead, status_code=status.HTTP_201_CREATED, dependencies=[checker_admin])
 async def create_a_grant(
     grant_data:grant.GrantCreate, 
     session: AsyncSession = Depends(get_session), 
-    user_details = Depends(access_token_bearer) # Protection of endpoint
     ):
-    print(user_details)
 
     new_grant = await grant_service.create_grant(grant_data, session)
 
@@ -46,7 +45,7 @@ async def get_grant(grant_id: int, session: AsyncSession = Depends(get_session))
     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Grant not found")
 
 
-@router.patch("/{grant_id}", response_model=grant.GrantRead, status_code=status.HTTP_202_ACCEPTED)
+@router.patch("/{grant_id}", response_model=grant.GrantRead, status_code=status.HTTP_202_ACCEPTED, dependencies=[checker_admin])
 async def update_grant(grant_id: int, update_data: grant.GrantUpdate, session: AsyncSession = Depends(get_session)):
     updated_grant = await grant_service.update_grant(grant_id, update_data, session)
 
@@ -56,7 +55,7 @@ async def update_grant(grant_id: int, update_data: grant.GrantUpdate, session: A
     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Grant not found")
 
 
-@router.delete("/{grant_id}", status_code=status.HTTP_204_NO_CONTENT)
+@router.delete("/{grant_id}", status_code=status.HTTP_204_NO_CONTENT, dependencies=[checker_admin])
 async def delete_grant(grant_id: int, session: AsyncSession = Depends(get_session)):
     success = await grant_service.delete_grant(grant_id, session)
 
