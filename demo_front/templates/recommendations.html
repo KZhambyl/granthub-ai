@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container" style="margin-top: 40px; max-width: 600px;">
+  <h2>Your Recommendations</h2>
+  <ul id="recommendations-list"></ul>
+</div>
+
+<script>
+async function loadRecommendations() {
+  const token = localStorage.getItem("access_token");
+  if (!token) {
+    window.location.href = "/login"; 
+    return;
+  }
+
+  try {
+    const response = await fetch("/recommendations/data", {
+      headers: {
+        "Authorization": "Bearer " + token
+      }
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      const list = document.getElementById("recommendations-list");
+      list.innerHTML = "";
+
+      data.recommendations.forEach(rec => {
+        const li = document.createElement("li");
+        li.innerText = rec.title || JSON.stringify(rec);
+        list.appendChild(li);
+      });
+
+    } else {
+      document.getElementById("recommendations-list").innerHTML =
+        "❌ Failed to load: " + (await response.text());
+    }
+
+  } catch (err) {
+    document.getElementById("recommendations-list").innerHTML =
+      "⚠️ Error: " + err.message;
+  }
+}
+
+loadRecommendations();
+</script>
+{% endblock %}

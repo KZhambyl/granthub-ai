@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container" style="margin-top: 40px; max-width: 400px;">
+  <h2>Login</h2>
+  <form id="login-form">
+    <div>
+      <label>Email:</label>
+      <input type="email" id="email" required>
+    </div>
+    <div>
+      <label>Password:</label>
+      <input type="password" id="password" required>
+    </div>
+    <button type="submit">Login</button>
+  </form>
+
+  <p id="login-message"></p>
+</div>
+
+<script>
+document.getElementById("login-form").addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
+  try {
+    const response = await fetch("http://127.0.0.1:8000/api/v1/auth/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ email, password })
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      localStorage.setItem("access_token", data.access_token);
+      localStorage.setItem("refresh_token", data.refresh_token);
+      document.getElementById("login-message").innerText = "✅ Login successful!";
+      window.location.href = "/recommendations"; // редирект на страницу с рекомендациями
+    } else {
+      document.getElementById("login-message").innerText = "❌ " + data.detail;
+    }
+
+  } catch (err) {
+    document.getElementById("login-message").innerText = "⚠️ Error: " + err.message;
+  }
+});
+</script>
+{% endblock %}

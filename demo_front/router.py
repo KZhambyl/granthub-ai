@@ -4,9 +4,11 @@ from sqlmodel.ext.asyncio.session import AsyncSession
 from app.services.grantService import GrantService
 from app.db.main import get_session
 from fastapi.templating import Jinja2Templates
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, JSONResponse
 from app.services.internshipService import InternshipService
 from app.services.scholarshipService import ScholarshipService
+from app.auth.dependencies import AccessTokenBearer
+import httpx
 
 
 
@@ -76,3 +78,28 @@ async def get_scholarship(request: Request, scholarship_id: int, session: AsyncS
         return templates.TemplateResponse("scholarship_detail.html", {"request": request, "scholarship": scholarship})
 
     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Scholarship not found")
+
+# Auth
+
+@router.get("/login", response_class=HTMLResponse)
+async def login_page(request: Request):
+    return templates.TemplateResponse("login.html", {"request": request})
+
+# Recommendations
+
+@router.get("/recommendations", response_class=HTMLResponse)
+async def recommendations_page(request: Request):
+    return templates.TemplateResponse("recommendations.html", {"request": request})
+
+@router.get("/recommendations/data")
+async def recommendations_data(request: Request):
+    auth_header = request.headers.get("Authorization")
+    if not auth_header:
+        return JSONResponse(status_code=401, content={"detail": "Missing token"})
+
+    async with httpx.AsyncClient() as client:
+        resp = await client.get(
+            "http://127.0.0.1:8000/api/v1/recommendations/",
+            headers={"Authorization": auth_header}
+        )
+    return JSONResponse(status_code=resp.status_code, content=resp.json())
