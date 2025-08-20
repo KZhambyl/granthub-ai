@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Available Grants</h2>
+
+<div id="grants-list">
+    {% for grant in grants %}
+    <div class="item-card" style="border:1px solid #ccc; padding:10px; margin:10px;">
+        <img src="{{ grant.image_url }}" alt="{{ grant.title }}" class="card-image">    
+        <div class="card-content">
+        <h3>{{ grant.title }}</h3>
+        <p>{{ grant.description }}</p>
+        <a href="/grants/{{ grant.id }}">
+            <button>View Details</button>
+        </a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
+
+

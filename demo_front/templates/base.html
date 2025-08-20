@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>GrantHub Demo</title>
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: #f9f9f9;
+            color: #333;
+        }
+
+        /* Навбар */
+        nav {
+            background: #2c3e50;
+            padding: 12px 20px;
+            display: flex;
+            gap: 25px;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.2s;
+        }
+        nav a:hover {
+            color: #1abc9c;
+        }
+
+        /* Контент */
+        .container {
+            padding: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        /* Карточки */
+        .item-card {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            overflow: hidden; /* чтобы изображение и углы совпадали */
+            margin: 15px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .item-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .card-image {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .card-content {
+            padding: 15px;
+        }
+
+        .item-card h3 {
+            margin-top: 0;
+            color: #34495e;
+        }
+
+        .item-card p {
+            margin: 8px 0;
+        }
+
+        /* Кнопки */
+        button {
+            background: #1abc9c;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.2s;
+        }
+        button:hover {
+            background: #16a085;
+        }
+
+        /* Детальная инфа */
+        .detail-box {
+            background: #fff;
+            border: 1px solid #2c3e50;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+    </style>
+
+</head>
+<body>
+    <!-- Навбар -->
+    <nav>
+        <a href="/">Home</a>
+        <a href="/grants">Grants</a>
+        <a href="/internships">Internships</a>
+        <a href="/scholarships">Scholarships</a>
+    </nav>
+
+    <!-- Контент -->
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

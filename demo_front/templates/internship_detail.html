@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% if internship %}
+    <div class="detail-box">
+        <img src="{{ internship.image_url }}" alt="{{ internship.title }}" style="width:100%; max-height:300px; object-fit:cover; border-radius:10px; margin-bottom:15px;">
+        
+        <h2>{{ internship.title }}</h2>
+        <p>{{ internship.description }}</p>
+        <p><strong>Provider:</strong> {{ internship.provider }}</p>
+        <p><strong>Country:</strong> {{ internship.country }}</p>
+        <p><strong>Duration:</strong> {{ internship.duration }}</p>
+        <p><strong>Deadline:</strong> {{internship.deadline}} </p>
+        <p><strong>Paid:</strong> 
+            {% if internship.paid %}
+                Yes
+            {% else %}
+                No
+            {% endif %}
+        </p>
+
+        <p><a href="{{ internship.source_url }}" target="_blank">🔗 Source link</a></p>
+    </div>
+    {% else %}
+    <p>Internship not found</p>
+    {% endif %}
+{% endblock %}
+

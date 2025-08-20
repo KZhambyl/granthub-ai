@@ -15,3 +15,6 @@ class ScholarshipRead(ScholarshipBase):
 
 class ScholarshipUpdate(ScholarshipBase):
     title: Optional[str] = None
+    description: Optional[str] = None
+    source_url: Optional[str] = None
+    provider: Optional[str] = None

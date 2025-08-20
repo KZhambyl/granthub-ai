@@ -15,7 +15,7 @@ class BaseOpportunitySchema(BaseModel):
     language: Optional[str] = None
 
     provider: str
-    image_url: Optional[HttpUrl] = None  # если используете URL
+    image_url: Optional[HttpUrl] = None
 
     class Config:
         orm_mode = True

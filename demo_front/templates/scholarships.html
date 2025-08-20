@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Available Scholarships</h2>
+
+<div id="scholarships-list">
+    {% for scholarship in scholarships %}
+    <div class="item-card" style="border:1px solid #ccc; padding:10px; margin:10px;">
+        <img src="{{ scholarship.image_url }}" alt="{{ scholarship.title }}" class="card-image">    
+        <div class="card-content"> 
+        <h3>{{ scholarship.title }}</h3>
+        <p>{{ scholarship.description }}</p>
+        <a href="/scholarships/{{ scholarship.id }}">
+            <button>View Details</button>
+        </a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

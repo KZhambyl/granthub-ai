@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% if scholarship %}
+    <div class="detail-box">
+        <img src="{{ scholarship.image_url }}" alt="{{ scholarship.title }}" style="width:100%; max-height:300px; object-fit:cover; border-radius:10px; margin-bottom:15px;">
+        
+        <h2>{{ scholarship.title }}</h2>
+        <p>{{ scholarship.description }}</p>
+        <p><strong>Provider:</strong> {{ scholarship.provider }}</p>
+        <p><strong>Country:</strong> {{ scholarship.country }}</p>
+        <p><strong>Duration:</strong> {{ scholarship.duration }}</p>
+        <p><strong>Deadline:</strong> {{scholarship.deadline}} </p>
+        <p><strong>Level:</strong> {{scholarship.level }} </p>
+
+        <p><a href="{{ scholarship.source_url }}" target="_blank">🔗 Source link</a></p>
+    </div>
+    {% else %}
+    <p>Scholarship not found</p>
+    {% endif %}
+{% endblock %}
+

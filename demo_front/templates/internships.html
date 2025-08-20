@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Available Internships</h2>
+
+<div id="internships-list">
+    {% for internship in internships %}
+    <div class="item-card" style="border:1px solid #ccc; padding:10px; margin:10px;">
+        <img src="{{ internship.image_url }}" alt="{{ internship.title }}" class="card-image">    
+        <div class="card-content"> 
+        <h3>{{ internship.title }}</h3>
+        <p>{{ internship.description }}</p>
+        <a href="/internships/{{ internship.id }}">
+            <button>View Details</button>
+        </a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
