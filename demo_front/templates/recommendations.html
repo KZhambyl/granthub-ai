@@ -27,9 +27,19 @@ async function loadRecommendations() {
       list.innerHTML = "";
 
       data.recommendations.forEach(rec => {
-        const li = document.createElement("li");
-        li.innerText = rec.title || JSON.stringify(rec);
-        list.appendChild(li);
+          const li = document.createElement("li");
+          li.innerHTML = `
+              <div class="item-card">
+                  ${rec.data.image_url ? `<img class="card-image" src="${rec.data.image_url}" alt="${rec.data.title}">` : ""}
+                  <div class="card-content">
+                      <h3>${rec.data.title}</h3>
+                      <p><b>Provider:</b> ${rec.data.provider || "-"}</p>
+                      <p><b>Description:</b> ${rec.data.description || ""}</p>
+                      ${rec.data.source_url ? `<p><a href="${rec.data.source_url}" target="_blank">Link</a></p>` : ""}
+                  </div>
+              </div>
+          `;
+          list.appendChild(li);
       });
 
     } else {
