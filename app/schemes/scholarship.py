@@ -4,6 +4,7 @@ from .baseSchema import BaseOpportunitySchema
 
 class ScholarshipBase(BaseOpportunitySchema):
     level: Optional[str] = None  # bachelor, master, phd
+    deadline_text: Optional[str] = None
 
 class ScholarshipCreate(ScholarshipBase):
     pass

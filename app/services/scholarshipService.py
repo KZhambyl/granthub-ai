@@ -4,7 +4,6 @@ from app.schemes import scholarship
 from app.models.scholarship import Scholarship
 from datetime import datetime
 
-
 class ScholarshipService:
     async def get_all_scholarships(self, session: AsyncSession):
         statement = select(Scholarship).order_by(desc(Scholarship.created_at))
@@ -29,13 +28,8 @@ class ScholarshipService:
         if scholarship_data_dict.get('deadline'):
             scholarship_data_dict['deadline'] = scholarship_data_dict['deadline'].replace(tzinfo=None)
 
-        new_scholarship = Scholarship(
-            **scholarship_data_dict
-        )
-
-        # new_scholarship.published_at = datetime.strptime(scholarship_data_dict['published_at'], "%Y-%m-%d")
-        # new_scholarship.deadline = datetime.strptime(scholarship_data_dict['deadline'], "%Y-%m-%d")
-
+        # deadline_text просто прокидываем как есть (может быть None/str)
+        new_scholarship = Scholarship(**scholarship_data_dict)
 
         session.add(new_scholarship)
         await session.commit()
@@ -43,7 +37,6 @@ class ScholarshipService:
 
     async def update_scholarship(self, scholarship_id: int, update_data: scholarship.ScholarshipUpdate, session: AsyncSession):
         scholarship_to_update = await self.get_scholarship(scholarship_id, session)
-
         if scholarship_to_update is None:
             return None
         
@@ -57,7 +50,6 @@ class ScholarshipService:
 
     async def delete_scholarship(self, scholarship_id: int, session: AsyncSession):
         scholarship_to_delete = await self.get_scholarship(scholarship_id, session)
-        
         if scholarship_to_delete is None:
             return None
         
