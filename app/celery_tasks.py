@@ -19,7 +19,6 @@ try:
     from app.db.main import AsyncSessionLocal  # предпочтительно
 except Exception:
     AsyncSessionLocal = None
-from app.parsers.grant.govgrants import grants_from_grants_gov
 
 logger = get_task_logger(__name__)
 
@@ -72,44 +71,3 @@ def send_email(self, recipients: list[str], subject: str, html_message: str):
     except Exception as e:
         logger.exception("Email sending failed: %s", e)
         raise
-
-# ETL: Grants.gov
-
-@celery_app.task(
-    bind=True,
-    autoretry_for=(Exception,),
-    retry_backoff=True,
-    retry_kwargs={"max_retries": 3},
-    time_limit=60,  # на одну пачку
-)
-def etl_grants_gov(self, keyword: Optional[str] = None, rows: int = 20, start: int = 0):
-    """
-    Запускает парсер Grants.gov и сохраняет результаты в БД.
-    Делаем полноценную async-сессию внутри Celery.
-    """
-    if AsyncSessionLocal is None:
-        raise RuntimeError("AsyncSessionLocal is not available. Export it from app.db.main")
-
-    async def _run():
-        async with AsyncSessionLocal() as session:
-            ids = await grants_from_grants_gov(
-                session=session,
-                keyword=keyword,
-                rows=rows,
-                start_record=start,
-            )
-            return ids
-
-    ids = asyncio.run(_run())
-    logger.info("Grants.gov ETL inserted: %s", ids)
-    return {"inserted": len(ids), "ids": ids}
-
-# Пример расписания (опционально)
-# Выполнять ETL каждые 6 часов
-# celery_app.conf.beat_schedule = {
-#     "etl-grants-gov-every-6h": {
-#         "task": "app.celery_tasks.celery_tasks.etl_grants_gov",
-#         "schedule": crontab(minute=0, hour="*/6"),
-#         "args": [None, 50, 0],  # keyword=None, rows=50, start=0
-#     },
-# }
